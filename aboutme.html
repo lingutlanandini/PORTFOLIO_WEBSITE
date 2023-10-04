@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        /* Background styling */
+        .containerr {
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.90), rgba(0, 0, 0, 0.90)), url("https://wallpaperaccess.com/full/5765161.jpg");
+            background-position: center;
+            background-size: cover;
+            position: relative;
+        }
+
+        /* Navigation bar styling */
+        .nav-bar {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+           
+            z-index: 100; 
+        }
+
+        .nav-bar ul li {
+            list-style-type: none;
+            display: inline-flex;
+            margin: 20px 50px;
+            padding: 14px 0;
+            position: relative;
+        }
+
+        .nav-bar ul li a {
+            text-decoration: none;
+            color: whitesmoke;
+            font-size: 19px;
+            font-family: 'Times New Roman', Times, serif;
+            cursor: pointer;
+        }
+
+        .nav-bar ul li a:hover {
+            color: orange;
+        }
+
+        .nav-bar ul li::after {
+            content: " ";
+            height: 3px;
+            width: 0;
+            background-color: orange;
+            position: absolute;
+            left: 0;
+            bottom: 9px;
+            transition: 0.5s;
+        }
+
+        .nav-bar ul li:hover::after {
+            width: 100%;
+        }
+
+        .logo {
+            width: 110px;
+            margin-top: 3px;
+            margin-left: 10px;
+            font-size: 40px;
+            color: whitesmoke;
+        }
+
+        #toggle,
+        .label {
+            display: none;
+            color: whitesmoke;
+            font-size: 28px;
+            margin: 30px 10px;
+            cursor: pointer;
+        }
+
+        @media screen and (max-width: 1100px) {
+            .list {
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+                display: none;
+                background-color: black;
+                overflow: hidden;
+                z-index: 9999;
+                transition: all 0.5s ease;
+            }
+
+            .label {
+                display: block;
+            }
+
+            #toggle:checked~.list {
+                display: flex;
+            }
+
+            .label {
+                display: block;
+                color: whitesmoke;
+                font-size: 28px;
+                margin: 30px 20px;
+                cursor: pointer;
+            }
+        }
+
+        /* Section styling */
+        .section {
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: whitesmoke;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .section h1 {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+
+        .section p {
+            font-size: 30px;
+        }
+
+        .btn {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+           
+        }
+
+        .btn button {
+            width: 280px;
+            height: 40px;
+            margin: 10px;
+            text-align: center;
+            font-weight: bold;
+            background-color: orange;
+            border-radius: 30px;
+            border: 1px solid transparent;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .btn button:hover {
+            background-color: aliceblue;
+        }
+
+        @media screen and (max-width: 750px) {
+            .section h1 {
+                font-size: 38px;
+            }
+
+            .section p {
+                font-size: 16px;
+            }
+
+            .btn button {
+                width: 180px;
+            }
+        }
+
+        @media screen and (min-width: 1150px) {
+            .nav-bar ul li {
+                margin: 20px 30px;
+            }
+
+            .nav-bar ul {
+                justify-content: space-between;
+            }
+        }
+
+        /* Chat button styling */
+        .containerss {
+            width: 250px;
+            height: 50px;
+            background-color: #28de28;
+            position: fixed;
+            top: 570px;
+            left: -180px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 32px;
+            transition: all 0.5s;
+        }
+
+        .con .img {
+            position: absolute;
+            float: right;
+            width: 19px;
+            margin-top: 15px;
+            margin-right: -32px;
+        }
+
+        .containerss:hover {
+            left: -5px;
+        }
+
+        .con .s {
+            float: left;
+            font-size: 20px;
+            margin-left: 23px;
+        }
+
+        /* Testimonials styling */
+        .testimonials {
+            width: 100%;
+            height: 80px;
+            text-align: center;
+            position: relative;
+            top: 30px;
+            padding: 15px 0;
+        }
+
+        .hr {
+            width: 100px;
+            height: 4px;
+            background-color: orange;
+            margin: 0 auto;
+            margin-top: 10px;
+        }
+
+        /* Container for cards */
+        .container-card {
+            margin-top: 50px;
+        }
+
+        /* Individual card styling */
+        .card {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: whitesmoke;
+            transform: scale(1.05);
+        }
+
+        .card-title {
+            font-size: 20px;
+            margin-top: 15px;
+        }
+
+        .card-text {
+            font-size: 16px;
+        }
+
+        /* Coding stats styling */
+        .container-stats {
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 80px;
+            padding: 20px;
+            margin-top: 50px;
+            color: whitesmoke;
+        }
+
+        .stats-title {
+            font-size: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .stats-item {
+            text-align: center;
+            margin: 20px;
+        }
+
+        .stats-item h1 {
+            font-size: 40px;
+        }
+
+        .stats-item a {
+            text-decoration: none;
+            color: aliceblue;
+        }
+    </style>
+</head>
+<body>
+    
+        <nav class="nav-bar" style="background-color: black;">
+            <div class="logo"><img src="https://cdn4.sharechat.com/NameArt_8e920412-7c27-46ba-81b8-54e9b562b3c6-329a7a99-ca29-45f6-a949-960c813554ab_cmprsd_40.jpg?tenant=sc&referrer=pwa-sharechat-service&f=rsd_40.jpg" alt="" width="100px" height="100px"></div>
+            <input type="checkbox" id="toggle">
+            <label for="toggle" class="label"><i class="fa-solid fa-bars"></i></label>
+            <ul class="list">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="aboutme.html">ABOUT ME</a></li>
+                <li><a href="resume.html">RESUME</a></li>
+                <li><a href="praccjac.html">PROJECTS</a></li>
+                <li><a href="contact.html">CONTACT</a></li>
+            </ul>
+        </nav>
+        
+
+    <br>
+    <!--end of navigation section-->
+    <!--
+                WHATSUP ICON
+    -->
+    <style>
+        .containerss{
+        width: 250px;
+        height: 50px;
+        background-color: #28de28;
+        position: absolute;
+        top:590px;
+        left: -180px;
+       align-items: center;
+       justify-content: center;
+        border-radius: 32px;
+        transition: all 0.5s;
+        position: fixed;
+        z-index: 999;
+    }
+    .con .img{
+       position: absolute;
+        float: right;
+        width: 19px;
+        margin-top: 15px;
+        margin-right: -32px;
+
+    }
+    .containerss:hover{
+        left: -5px;
+    }
+    .con .s{
+        float: left;
+        font-size: 20px;
+        margin-left: 23px;
+    }
+</style>
+<div class="containerss">
+    <div class="con" style="padding: 10px;">
+    <h2 class="s" style="margin-top: 4px;">CHAT WITH ME </h2>&nbsp;&nbsp;
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <a href="https://api.whatsapp.com/send?phone=7093580960" class="float" target="_blank">
+    
+    
+    <img src="whatsapp1.png" style="width: 32px;" alt="img"></a>
+</div>
+</div>
+<!--WHATSUP ICON END-->
+    <style>
+        .about{
+            width: 100%;
+            height: 80px;
+            text-align: center;
+            position: absolute;
+            top:130px;
+            
+            padding: 15px 0;
+        }
+        .about h2{
+            font-size: 32px;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        .hr{
+        width: 100px;
+        height: 4px;
+        background-color: orange;
+        margin: 0 auto;
+        margin-top: 10px;
+    }
+    </style>
+    <div class="about">
+        <h2>ABOUT ME</h2>
+        <div class="hr"></div>
+    </div>
+    <!--about me-->
+    <style>
+        .me{
+            width: 88%;
+            height: 440px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            background-color: aliceblue;
+            position: relative;
+            top:230px;
+            left: 89px;
+
+        }
+        .me .img{
+            background-color: transparent;
+            width: 43%;
+            height: 400px;
+            margin-top: 30px;
+          
+           
+
+        }
+        .me .text{
+            
+            width: 43%;
+            height: 400px;
+            font-family: 'Times New Roman', Times, serif;
+           
+           
+        }
+        .text .nandu{
+            margin-top: 30px;
+        }
+        .text button{
+        width: 180px;
+       
+        padding: 10px 3px;
+        margin: 0 40px;
+        margin-left: 140px;
+        text-align: center;
+        font-weight: bold;
+        background-color: orange;
+        border-radius: 30px;
+        border: 1px solid transparent;
+        position: relative;
+        cursor: pointer;
+        overflow: hidden;
+       
+    }
+    .dev{
+        width: 88%;
+        height: 460px;
+       
+        display: flex;
+        position: relative;
+        top:230px;
+        left: 96px;
+    }
+    .one{
+     
+            width: 43%;
+            height: 400px;
+            margin-top: 20px;
+    }
+    .one .hr1 {
+           width: 100px;
+           height: 4px;
+           background-color: orange;
+           margin-top: 10px; 
+    }
+    
+
+    .main {
+            width: 500px;
+            height: 430px;
+            background-color: whitesmoke;
+            margin: 30px;
+            padding: 30px;
+            box-shadow: 0 10px  12px whitesmoke ;
+            margin: 0 auto;
+            margin-top: 30px;
+          
+            
+        }
+        .hi{
+            width: 100%;
+            height: 40px;
+         
+           
+            padding: 10px;
+            margin: 10px;
+        }
+        .skill{
+            text-align: right;
+            border-radius: 12px;
+            margin-right: 15px;
+            
+        }
+        .html{
+            width: 90%;
+            background-color: orange;
+        }
+        .css{
+            width: 90%;
+            background-color: orange;
+        }
+        .bootstrap{
+            width: 60%;
+            background-color: orange;
+        }
+        .java{
+            width: 80%;
+            background-color: orange;
+        }
+        .photoshop{
+            width: 85%;
+            background-color: orange;
+
+        }
+        .one .langs{
+            margin-left: 30px;
+            line-height: 50px;
+        }
+        .langs ul li{
+            font-size: 20px;
+        }
+        @media screen and (max-width:790px){
+            .me{
+            width: 85%;
+            height: 800px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            top:230px;
+            left: 39px;
+
+        }
+        .me .img{
+            background-color: transparent;
+            width: 100%;
+            height: 300px;
+            margin-top: 30px;
+            margin-left: 28px;
+          
+           
+
+        }
+        .me .text{
+            width: 100%;
+            height: 400px;
+            padding: 4px;
+           
+           
+           }
+           .dev{
+        width: 88%;
+        height: auto;
+       
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        top:230px;
+        left: 36px;
+    }
+    .dev .one{
+     
+            width: 100%;
+            height: 400px;
+            margin-top: 20px;
+    }
+    .one .hr1 {
+           width: 100px;
+           height: 4px;
+           background-color: orange;
+           margin-top: 10px; 
+    }
+    .dev .main {
+            width: 100%;
+            height: 430px;
+            background-color: whitesmoke;
+            margin: 30px;
+            padding: 30px;
+            box-shadow: 0 10px  12px whitesmoke ;
+            margin: 0 auto;
+            margin-top: 30px;
+          
+            
+        }
+        .hi{
+            width: 100%;
+            height: 40px;
+         
+           
+            padding: 10px;
+            margin: 10px;
+        }
+        .langs img{
+            margin: 0 auto;
+            margin-left: 50px;
+        }
+
+        } 
+               
+    </style>
+    <div class="me">
+        <div class="img">
+            <img src="casual-life-3d-young-woman-working-at-desk.png" alt="image" style="width: 380px;margin-left: 30px;" >
+        </div>
+        <div class="text">
+            <h2 class="nandu">I'M NANDINI LINGUTLA</h2><br>
+            <p style="font-size: 20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A dedicated and detail-oriented individual looking for an entry-level position at a well-reputed organization to gain experience and exposure and expand my knowledge.A dedicated and detail-oriented individual looking for an entry-level position at a well-reputed organization to gain experience and exposure and expand my knowledge.</p><br><br>
+            <button type="button">CLICK TO CALL</button>
+        </div>
+    </div>
+    <br><br>
+    <div class="dev">
+        <div class="one">
+        <h2 class="dev1">WEB DEVELOPER</h2> <div class="hr1"></div><br>
+        <p style="font-size: 20px;">
+       &nbsp; &nbsp; &nbsp; I'm used to create a responsive website designs using frontened which includes some frameworks also..
+        </p>
+     <br><br><br>
+     <div class="langs">
+       
+           <img src="girl.png" alt="" class="w-100">
+        
+    </div>
+      </div>
+            <div class="main">
+                <p>HTML</p>
+                 <div class="hi">
+                    <div class="skill html">90%</div>
+                 </div>
+                 <p>CSS</p>
+                 <div class="hi">
+                    <div class="skill css">90%</div>
+                 </div>
+                 <p>BOOTSTRAP</p>
+                 <div class="hi">
+                    <div class="skill bootstrap">60%</div>
+                 </div>
+                 <p>JAVASCRIPT</p>
+                 <div class="hi">
+                    <div class="skill java">80%</div>
+                 </div>
+                 <p>PHOTOSHOP</p>
+                 <div class="hi">
+                    <div class="skill photoshop">85%</div>
+                 </div>
+            
+            </div>
+       
+    </div><br>
+  
+      
+    
+    
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<style>
+    /* Style the "Stay Connected" section */
+
+
+
+.container mt-2 k{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: blue;
+    margin: 10px;
+    padding: 20px;
+}
+
+.child1 {
+    flex: 1;
+}
+
+.child2 {
+    flex: 1;
+    text-align: right; /* Align the image to the right */
+
+}
+.child2 img{
+    width: 160px;
+}
+
+@media screen and (max-width:790px){
+    .card {
+        flex-direction: column;
+}
+}
+
+    .footer {
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .footer p {
+            margin-bottom: 0;
+        }
+</style>
+<footer class="footer text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                
+                <p style="text-align: center;">2023 Lingutla Nandini @All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+    
+</body>
+</html>
